@@ -1,0 +1,36 @@
+<main class="card">
+  <h1>Sistema de envío de correo electrónico</h1>
+
+  <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+    <label for="to">Correo del destinatario</label>
+    <input id="to" type="email" formControlName="to" placeholder="destinatario@ejemplo.com" />
+    @if (form.controls.to.touched && form.controls.to.errors) {
+      <small class="error">
+        @if (form.controls.to.errors['required']) { El correo es obligatorio. }
+        @else { Escribe un correo válido. }
+      </small>
+    }
+
+    <label for="subject">Asunto</label>
+    <input id="subject" type="text" formControlName="subject" maxlength="150" />
+    @if (form.controls.subject.touched && form.controls.subject.errors) {
+      <small class="error">El asunto es obligatorio (máximo 150 caracteres).</small>
+    }
+
+    <label for="message">Mensaje</label>
+    <textarea id="message" rows="6" formControlName="message" maxlength="5000"></textarea>
+    @if (form.controls.message.touched && form.controls.message.errors) {
+      <small class="error">El mensaje es obligatorio (máximo 5000 caracteres).</small>
+    }
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Enviando...' : 'Enviar correo' }}
+    </button>
+  </form>
+
+  @if (resultado) {
+    <p class="aviso" [class.ok]="resultado.tipo === 'ok'" [class.fail]="resultado.tipo === 'error'">
+      {{ resultado.texto }}
+    </p>
+  }
+</main>

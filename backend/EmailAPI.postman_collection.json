@@ -1,0 +1,150 @@
+{
+  "info": {
+    "name": "Email API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "testEmail",
+      "value": "CAMBIA_ESTE_CORREO@ejemplo.com"
+    }
+  ],
+  "item": [
+    {
+      "name": "A - Envío válido (esperado 202)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"to\": \"{{testEmail}}\",\n  \"subject\": \"Prueba de correo\",\n  \"message\": \"Hola, este es un correo de prueba.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/emails/send",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "emails",
+            "send"
+          ]
+        },
+        "description": "Esperado: 202 y status=success"
+      }
+    },
+    {
+      "name": "B - Correo inválido (esperado 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"to\": \"esto-no-es-un-correo\",\n  \"subject\": \"Prueba\",\n  \"message\": \"Hola\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/emails/send",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "emails",
+            "send"
+          ]
+        },
+        "description": "Esperado: 400"
+      }
+    },
+    {
+      "name": "C - Asunto vacío (esperado 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"to\": \"{{testEmail}}\",\n  \"subject\": \"\",\n  \"message\": \"Hola\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/emails/send",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "emails",
+            "send"
+          ]
+        },
+        "description": "Esperado: 400"
+      }
+    },
+    {
+      "name": "D - JSON incompleto, sin subject (esperado 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"to\": \"{{testEmail}}\",\n  \"message\": \"Hola\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/emails/send",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "emails",
+            "send"
+          ]
+        },
+        "description": "Esperado: 400"
+      }
+    }
+  ]
+}

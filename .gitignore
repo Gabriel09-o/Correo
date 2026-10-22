@@ -1,0 +1,11 @@
+# Secretos
+.env
+# Backend
+backend/target/
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+# IDE
+.idea/
+.vscode/
